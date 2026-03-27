@@ -1,8 +1,8 @@
-% Read data from TXT file
-% File format:
-% Line 1: m b (slope and intercept)
-% Line 2: A B (reference points)
-% Lines 3+: x y (data points)
+% dato.txt
+% m b
+% x1(BASE.deci) y1(BASE.deci)
+% ...
+% xN(BASE.deci) yN(BASE.deci)
 
 filename = 'datos.txt';  % Change this to your file name
 data = dlmread(filename);
@@ -37,4 +37,4 @@ grid on
 xlabel('x')
 ylabel('y')
 title(sprintf('y = %.2fx + %.2f (A=%.2f, B=%.2f)', m, b, A, B))
-legend('Theoretical line', 'Data points')
+legend('Linea real', 'Datos medidos')
