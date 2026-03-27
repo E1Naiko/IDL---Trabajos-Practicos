@@ -1,6 +1,6 @@
 #ifndef EXPORTADOR_H_INCLUDED
 #define EXPORTADOR_H_INCLUDED
 
-int Exportador(int m, int b, int [] dataX, int [] dataY, int size);
+int Exportador(int mi, int md, int bi, int bd, int [] dataXi, int[] dataXd, int [] dataYi, int [] dataYD, int size);
 
 #endif // EXPORTADOR_H_INCLUDED
