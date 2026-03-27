@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int exportador(int m, int b, int dataX[], int dataY[], int size)
+int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int dataYi[], int dataYd[], int size)
 {
     FILE *datasheet;
     char nombre[50];
@@ -23,10 +23,10 @@ int exportador(int m, int b, int dataX[], int dataY[], int size)
     }
 
     // Escribir datos
-    fprintf(datasheet, "%i;%i;", m, b);
+    fprintf(datasheet, "%i.%i;%i.%i;", mi, md, bi, bd);
 
     for (int i = 0; i < size; i++) {
-        fprintf(datasheet, "%i;%i;", dataX[i], dataY[i]);
+        fprintf(datasheet, "%i.%i;%i.i", dataXi[i], dataXd[i], dataYi[i], dataXd[i]);
     }
 
     fclose(datasheet);
