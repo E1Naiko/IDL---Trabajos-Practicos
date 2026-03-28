@@ -50,3 +50,15 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# --- GNU Octave ---
+*.oct               # compiled C++ oct-files
+*.mex*              # compiled MEX files (.mex, .mexa64, .mexw64, .mexmaci64, etc.)
+*.mat               # binary Octave/MATLAB data files (often huge; comment out if you want to track them)
+*.fig               # MATLAB/Octave figure files
+octave-workspace    # saved workspace when you run `save`
+octave-core*        # core dump if Octave crashes
+.octave_hist        # command history
+*~                  # backup files from editors (e.g. script.m~)
+*.asv               # Octave/MATLAB autosave files
+.jitcache           # Octave's JIT cache
