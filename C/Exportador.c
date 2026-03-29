@@ -1,21 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include "Exportador.h"
 
 int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int dataYi[], int dataYd[], int size)
 {
     FILE *datasheet;
-    char nombre[50];
-    char nombreCompleto[60];
 
     printf("\nExportar datos a .txt\n");
-    printf("\nIngrese un nombre para el archivo:\n");
 
-    scanf("%49s", nombre);  // evita overflow
-
-    // Agregar extensión .csv
-    sprintf(nombreCompleto, "%s.csv", nombre);
-
-    datasheet = fopen(nombreCompleto, "w");
+    datasheet = fopen("datos.txt", "w");
 
     if (datasheet == NULL) {
         printf("Error al crear el archivo\n");
