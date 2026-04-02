@@ -8,7 +8,7 @@ Curso 2026 - Trabajo Entregable 0
 Lineamientos generales- Se sugiere realizar la entrega como un informe donde se contesten las preguntas realizadas junto con los detalles de la explicación, diagramas, gráficos, cuentas, demostraciones, etc. Por otra parte deben entregar los programas fuente en un formato que pueda ser fácilmente revisado, editado, compilado y ejecutado en el aula. Evaluación- La tarea será evaluada y los alumnos deberán defender el trabajo realizado frente a los docentes asignados
 
 ## Descripción
-Sabemos que la ecuación de una recta es y=mx+b
+Sabemos que la ecuación de una recta es y=mx+b.
 En este caso queremos explorar la precisión y rango de valores que pueden obtenerse al trabajar con la ecuación de la recta con representación en punto fijo. Se adopta para m una representación Q (0,15) y para b una representación Q (7,8) mientras que x e y se van a representar en variables de punto fijo de 32 bits con signo
 
 #### a. ¿cuál es el rango de representación de valores de m ?
@@ -17,7 +17,7 @@ La representación de $m$ es $Q(0,15)$. Siendo $a = 0$ y $b = 15$:
 
 $$2^a-2^{-b}=2^0-2^{-15}=1-2^{-15}$$
 
-$m$ tiene un rango de representación que va de $-(1-2^{-15})$ a $+(1-2^{-15})$.
+$m$ tiene un rango de representación que va de $-(1-2^{-15})$ a $+(1-2^{-15})$ ≈ ±0.999969482421875
 
 #### b. ¿cuál es el rango de representaciones de valores de b?
 
@@ -27,7 +27,7 @@ $$2^a-2^{-b}=2^7-2^{-8}=128-0,00390625=127,99609375$$
 
 $b$ tiene un rango de representación que va de $-127,99609375$ a $+127,99609375$.
   
-#### c. Elija una representación Q ( c ,d ) para x y para y tal que tanto m como b puedan representarse usando la misma representación sin pérdida de cifras significativas. Indique cuáles serían los desplazamientos y/o máscaras que debe utilizar para ubicar las variables.
+#### c. Elija una representación Q ( c, d ) para x y para y tal que tanto m como b puedan representarse usando la misma representación sin pérdida de cifras significativas. Indique cuáles serían los desplazamientos y/o máscaras que debe utilizar para ubicar las variables.
 
 Dado que almacenaremos $x$ e $y$ en variables de 32 bits con signo, tenemos $N=31$ bits para la representación. Queremos no perder cifras significativas al convertir $m$ y $b$ a $Q(c,d)$.  
 La mayor cantidad de bits enteros que necesitamos viene dada por $c=\text{Máx}(a_m,a_b)=\text{Máx}(0,7)=7$.  
@@ -59,7 +59,7 @@ Donde:
 
 Operando para despejar $x_{máx}$:
 
-$$x_{máx}=\dfrac{y_{máx}-b_{máx}}{m_{máx}}=\dfrac{(2^{16}-2^{-15})-(2^{7}-2^{-8})}{1-2^{-15}}=65.410,000030518509475...$$
+$$x_{máx}=\dfrac{y_{máx}-b_{máx}}{m_{máx}}=\dfrac{(2^{16}-2^{-15})-(2^{7}-2^{-8})}{1-2^{-15}}≈65.410,000030518509475$$
 
 El resultado puede truncarse para ser representado en $Q(16,15)$ como:
 
