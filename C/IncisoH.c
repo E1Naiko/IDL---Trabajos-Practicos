@@ -20,6 +20,10 @@ struct NumerosQ
     int divisor; /* variable para guardar el divisor de la parte fraccionaria */
 };
 
+NumerosQ leerNumeros();
+NumerosQ calcularY(NumerosQ m, NumerosQ b, , NumerosQ x);
+void imprimirValores(NumerosQ m, NumerosQ b, , NumerosQ x);
+
 int IncisoH(){
 
     /*
@@ -29,10 +33,45 @@ int IncisoH(){
      la ordenada y y lo muestre en punto fijo en forma hexadecimal y en decimal.
     */
 
+    int act = -1;
+    struct NumerosQ m, b;
 
+    while (act<>0) do {
+        printf("Ingrese una opcion:");
+        printf(" 1: ingresar pendiente (m).");
+        printf(" 2: ingresar ordenada (b).");
+        printf(" 3: ingresar valor de x.");
+        printf(" 4: imprimir valores actuales.");
+        printf(" 5: aproximar recta con 20 valores de x.")
+        printf(" 6: Exportar resultados a txt.");
+        printf(" 7: limpiar historial de resultados.");
+        printf(" 0: Salir.");
+        fread(act);
+        
+        case act:
+            0: act = 0; break;
+            1: m=leerNumeros(); break;
+            2: b=leerNumeros(); break;
+            3: x=leerNumeros(); break;
+            4: printf("DEBUG - POR IMPLEMENTAR"); break;
+            5: printf("DEBUG - POR IMPLEMENTAR"); break;
+            6: printf("DEBUG - POR IMPLEMENTAR"); break;
+            7: printf("DEBUG - POR IMPLEMENTAR"); break;
+        default: printf("Error valor no valido.");
+
+
+    }
 
 
     return 0;
+}
+
+NumerosQ calcularY(NumerosQ m, NumerosQ b, , NumerosQ x){
+
+}
+
+void imprimirValores(NumerosQ m, NumerosQ b, , NumerosQ x){
+
 }
 
 NumerosQ leerNumeros(){ // Lee un numero en punto fijo desde terminal y lo devuelve en una estructura, en caso de error el signo resultante es ERROR

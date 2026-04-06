@@ -5,6 +5,8 @@
 #define ESCALA 256
 #define MAX_INT 127
 #define MIN_INT -128
+#define RANGO_INF -32768
+#define RANGO_SUP 32767
 
 /*f. Escriba un programa en lenguaje de programación C que permita el ingreso de un valor expresado en notación decimal ±eee.ffff y lo convierta a representación en punto fijo de 16 bits Q(7,8).
 El programa debe validar la entrada y determinar si el número ingresado está dentro del rango representable. La salida debe expresarse en Hexadecimal (0xHHHH)*/
@@ -78,6 +80,7 @@ int IncisoF() {
         /* se suma la parte fraccionaria al resultado (para convertirla de entero a decimales se divide por el divisor) */
         resultado += num / divisor;
     }
+    
     /* multiplica por +-1 para darle signo al numero */
     resultado *= signo;
 
@@ -85,7 +88,7 @@ int IncisoF() {
     printf("%d\n", resultado);
 
     /* valida el rango (los numeros ahí equivalen a -128 y 127 en decimal respectivamente) */
-    if (resultado < -32768 || resultado > 32767) {
+    if (resultado < RANGO_INF || resultado > RANGO_SUP) {
         printf("Error: fuera de rango\n");
         return 1;
     }
