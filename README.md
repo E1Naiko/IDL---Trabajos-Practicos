@@ -47,56 +47,45 @@ Para convertir $b$ a $Q(16,15)$, dado que tiene solo 8 bits fraccionarios, es ne
 La representación de $x$ e $y$ es $Q(16,15)$. Siendo $a = 16$ y $b = 15$, su rango es:
 
 $$-2^a ≤ x ≤ +2^a-2^{-b}$$
-$$-2^16 ≤ x ≤ +2^16-2^{-15}$$
+$$-2^{16} ≤ x ≤ +2^{16}-2^{-15}$$
 $$-65536 ≤ x ≤ +65536-2^{-15}$$
 
 $x$ e $y$ tienen un rango de representación que va de $-65536$ a $+(65536-2^{-15})$.
   
 #### e. De acuerdo con la ecuación de la recta y tomando casos límites respecto a los valores de las constantes m y b, por ejemplo el mínimo valor negativo o el máximo valor positivo, a qué valores debería acotarse x para que usando la representación elegida los valores de y obtenidos no produzcan overflow.
 
-La ecuación de la recta, reemplazando por los valores máximos, es la siguiente:
+Operando para despejar $x$ desde la ecuación de la recta:
 
-$$y_{máx}=m_{máx}·x_{máx}+b_{máx}$$
+$$y=m·x+b$$
+$$x=\dfrac{y-b}{m}$$
 
-Donde:
-* $y_{máx}=2^{16}-2^{-15}=65.535,999969482421875$
-* $m_{máx}=1-2^{-15}=0,999969482421875$
-* $b_{máx}=2^{7}-2^{-8}=127,99609375$
+Se quieren encontrar los valores extremos de $x$ fuera de los cuales se producirá overflow mediante la suma en $y_{máx}$ como por la resta en $y_{mín}$. La metodología consiste en reemplazar en la última ecuación con los valores extremos de $y$, $m$ y $b$, y se determinará como valores para acotar $x$ a los siguientes:
+* $x_{máx}$ será el menor valor positivo obtenido
+* $x_{mín}$ será el mayor valor negativo (menor en valor absoluto) obtenido
 
-Operando para despejar $x_{máx}$:
+Ambos se truncan al valor inmediatamente menor en módulo que pueda ser representado en $Q(16,15)$, y recordar que el límite de representación de $x$ es el mismo que el de $y$.
 
-$$x_{máx}=\dfrac{y_{máx}-b_{máx}}{m_{máx}}=\dfrac{(2^{16}-2^{-15})-(2^{7}-2^{-8})}{1-2^{-15}}≈65.410,000030518509475$$
+Para $y_{máx} = 2^{16} - 2^{-15} = 65.535,999969482421875$:
 
-El resultado puede truncarse para ser representado en $Q(16,15)$ como:
+| $x=\dfrac{y_{máx}-b}{m}$ | $m_{mín} = -1$ | $m_{máx} = 1-2^{-15}$ |
+|-------------------------:|----------------|-----------------------|
+|       $b_{mín} = -2^{7}$ | Real: -65.536,007781982421875<br>Representado: -65.536 (overflow en $x$) | Real: ≈65.538,007843256935331<br>Representado: Representado: -65.536 (overflow en $x$) |
+| $b_{máx} = 2^{7}-2^{-8}$ | Real: -65.408,003875732421875<br>Representado: **-65.408,003875732421875** | Real: ≈65.410,000030518509475<br>Representado: 65.410,000030517578125 |
 
-$$x_{máx}=2^{16}-2^7+2+2^{-15}=65.410,000030517578125$$
-$$x_{máx}=0\\:1111\\:1111\\:1000\\:0010·0000\\:0000\\:0000\\:001$$
+Para $y_{mín} = -2^{16} = 65.536$:
 
-Y como un entero con signo de 32 bits: $x_{máx}=\text{0x7FC1\\:0001}$.
+| $x=\dfrac{y_{mín}-b}{m}$ | $m_{mín} = -1$ | $m_{máx} = 1-2^{-15}$ |
+|-------------------------:|----------------|-----------------------|
+|       $b_{mín} = -2^{7}$ | Real: 65.408<br>Representado: **65.408** | Real: ≈-65.409,996154667806024 <br>Representado: -65.409,996124267578125 |
+| $b_{máx} = 2^{7}-2^{-8}$ | Real: 65.663,99609375<br>Representado: 65.535,999969482421875 (overflow en $x$) | Real: ≈-65.666,000061037018951<br>Representado: -65.536 (overflow en $x$) |
 
-Tanto la ecuación de la recta como las representaciones utilizadas son simétricas respecto al eje de las abscisas, es decir, los valores máximos y mínimos que pueden tomar $m$, $b$, $x$ e $y$ son iguales en módulo. Si se usan los valores mínimos para $m$ y $b$, y atendiendo a la regla de los signos para el producto $m·x$, se demuestra que se puede vuelve a obtener $x_{máx}$:
-
-Siendo:
-* $y_{mín}=2^{16}-2^{-15}=-65.535,999969482421875$
-* $m_{máx}=1-2^{-15}=-0,999969482421875$
-* $b_{máx}=2^{7}-2^{-8}=-127,99609375$
-
-$$y_{mín}=m_{mín}·x_{máx}+b_{mín}$$
-$$|y_{mín}|=y_{máx}$$
-$$|m_{mín}·x_{máx}+b_{mín}|=|m_{mín}·x_{máx}|+|b_{mín}|=|m_{mín}|·x_{máx}+|b_{mín}|=m_{máx}·x_{máx}+b_{máx}$$
-
-Atendiendo al producto $m·x$ y al signo de $b$, si se quiere obtener $x_{mín}$ se lo debe conjugar con $m_{máx}$ y $b_{mín}$.
-
-$$y_{mín}=m_{máx}·x_{mín}+b_{mín}$$
-
-Y como $|y_{mín}|=y_{máx}$, entonces $x_{mín} = -x_{máx}$:
-
-$$x_{mín}=-(2^{16}-2^7+2+2^{-15})=-65.410,000030517578125$$
-$$x_{mín}=1\\:1111\\:1111\\:1000\\:0010·0000\\:0000\\:0000\\:001$$
-
-Como un entero con signo de 32 bits: $x_{mín}=\text{0xFFC1\\:0001}$.
-
-Las otras combinaciones arrojan valores menores en módulo para $y$ debido a que los términos $m·x$ y $b$ se oponen en signo, y por lo tanto no producen overflow.
+De estas tablas se obtienen las siguientes conclusiones:
+* $x$ debe ser acotado entre:
+  * $x_{mín} = -2^{16} + 2^7 - 2^{-8} + 2^{-15} =$ $-65.408,003875732421875$
+  * $x_{máx} = 2^{16} - 2^7 = 65.408$
+* Ambos valores se obtuvieron con $m_{mín}$ dado que $|m_{mín}|>|m_{máx}|$.
+* Utilizar los valores extremos de $y$ y $b$ del signo contrario produjo overflow para la variable $x$. Como la operación es $y-b$, y además $x$ e $y$ tienen el mismo rango de representación, si $b$ e $y$ tienen signo contrario entonces $|y-b|>|x|$. Estos casos no aparecerán en la práctica porque representan puntos fuera del dominio de $x$, que es una de las entradas.
+* Obedeciendo a la ley de los signos, y teniendo en cuenta la ecuación canónica $y=m·x+b$, se aprecia que los valores extremos para $x$ se obtuvieron cuando los términos $m·x$ y $b$ coincidían en signo, y como en ambos casos $m=$-1, $x_{máx}$ (positivo) se obtuvo con $b$ e $y$ negativos, y viceversa, $x_{mín}$ (negativo) se obtuvo con $b$ e $y$ positivos.
 
 ---
 
