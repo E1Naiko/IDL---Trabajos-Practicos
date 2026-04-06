@@ -44,11 +44,13 @@ Para convertir $b$ a $Q(16,15)$, dado que tiene solo 8 bits fraccionarios, es ne
   
 #### d. ¿Cuál va a ser el rango de valores que pueden representarse en x y en y?
 
-La representación de $x$ e $y$ es $Q(16,15)$. Siendo $a = 16$ y $b = 15$:
+La representación de $x$ e $y$ es $Q(16,15)$. Siendo $a = 16$ y $b = 15$, su rango es:
 
-$$2^a-2^{-b}=2^{16}-2^{-15}=65536-2^{-15}$$
+$$-2^a ≤ x ≤ +2^a-2^{-b}$$
+$$-2^16 ≤ x ≤ +2^16-2^{-15}$$
+$$-65536 ≤ x ≤ +65536-2^{-15}$$
 
-$x$ e $y$ tienen un rango de representación que va de $-(65536-2^{-15})$ a $+(65536-2^{-15})$.
+$x$ e $y$ tienen un rango de representación que va de $-65536$ a $+(65536-2^{-15})$.
   
 #### e. De acuerdo con la ecuación de la recta y tomando casos límites respecto a los valores de las constantes m y b, por ejemplo el mínimo valor negativo o el máximo valor positivo, a qué valores debería acotarse x para que usando la representación elegida los valores de y obtenidos no produzcan overflow.
 
