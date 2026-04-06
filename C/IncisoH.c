@@ -60,7 +60,6 @@ int IncisoH(){
 }
 
 NumerosQ calcularY(NumerosQ m, NumerosQ b, , NumerosQ x){
-    
 }
 
 void imprimirValores(NumerosQ m, NumerosQ b, , NumerosQ x){

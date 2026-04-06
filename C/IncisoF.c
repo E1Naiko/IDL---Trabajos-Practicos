@@ -71,7 +71,6 @@ int IncisoF() {
     if (divisor > 1) {
         int num = fraccion * ESCALA;
 
-
         if (signo > 0)
             num += divisor / 2;
         else

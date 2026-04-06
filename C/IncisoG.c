@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "IncisoG.h"
 
-int IncisoG{
+int IncisoG(){
 
     /*
     g. Escriba otro programa que dado un número expresado
