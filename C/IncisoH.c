@@ -3,11 +3,9 @@
 #include <string.h>
 
 // IMPORTANTE
-// - HAY QUE USAR Q(16,15) YA QUE ES LO QUE ELIGIO EL YUYO EN EL INCISO C. (ya
-// lo deje en el programa pero por las dudas aclaro
 #define A 16
 #define B 15
-// 2^16-2^(-15) = 65535.99996948242
+
 #define RANGO_ENTERO 65535
 #define RANGO_DECIMAL 99996948242
 #define DEFINICION 000030517578125
@@ -16,109 +14,134 @@
 #define ERROR 999
 
 struct NumerosQ {
-  int signo;    /* valor para representar el signo */
-  int entera;   /* variable para representar la parte entera del número */
-  int fraccion; /* variable para representar la parte fraccionaria del número */
-  int divisor;  /* variable para guardar el divisor de la parte fraccionaria */
+  int signo;
+  int entera;
+  int fraccion;
+  int divisor;
 };
 
-struct NumerosQ leerNumeros();
-struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, ,
-                          struct NumerosQ x);
-void imprimirValores(struct NumerosQ m, struct NumerosQ b, , struct NumerosQ x);
+struct Datos{
+  struct NumerosQ valores;
+  char input[50];
+};
+
+struct Datos leerNumeros();
+struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x);
+void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x);
+
+/* 
+
+    h. Escriba un programa que permita el ingreso de los valores de m, b y x en forma decimal y muestre su representaciónen
+  punto fijo en formato hexadecimal validando la entrada como en los puntos anteriores. Luego realizando todas las operacioes
+  en punto fijo con las representaciones adoptadas calcule el valor de la ordenada y y lo muestre en punto fjo
+  en forma hexadecimal y en decimal.
+
+*/
 
 int IncisoH() {
 
-  /*
-   h. Escriba un programa que permita el ingreso de los valores de m, b y x en
-   forma decimal y muestre su representación en punto fijo en formato
-   hexadecimal validando la entrada como en los puntos anteriores. Luego
-   realizando todas las operaciones en punto fijo con las representaciones
-   adoptadas calcule el valor de la ordenada y y lo muestre en punto fijo en
-   forma hexadecimal y en decimal.
-  */
-
   int act = -1;
-  struct NumerosQ m, b;
+  struct Datos m, b, x;
 
-  while (act != 0)
-    do {
-      printf("Ingrese una opcion:");
-      printf(" 1: ingresar pendiente (m).");
-      printf(" 2: ingresar ordenada (b).");
-      printf(" 3: ingresar valor de x.");
-      printf(" 4: imprimir valores actuales.");
-      printf(" 5: aproximar recta con 20 valores de x.");
-      printf(" 6: Exportar resultados a txt.");
-      printf(" 7: limpiar historial de resultados.");
-      printf(" 0: Salir.");
-      // fread(act);
+  m.valores.signo = 0;
+  m.valores.entera = 0;
+  m.valores.fraccion = 0;
+  
+  b.valores.signo = 0;
+  b.valores.entera = 0;
+  b.valores.fraccion = 0;
+  
+  x.valores.signo = 0;
+  x.valores.entera = 0;
+  x.valores.fraccion = 0;
 
-      switch (act) {
-      case 0:
-        act = 0;
-        break;
-      case 1:
-        m = leerNumeros();
-        break;
-      case 2:
-        b = leerNumeros();
-        break;
-      case 3:
-        x = leerNumeros();
-        break;
-      case 4:
-        printf("DEBUG - POR IMPLEMENTAR");
-        break;
-      case 5:
-        printf("DEBUG - POR IMPLEMENTAR");
-        break;
-      case 6:
-        printf("DEBUG - POR IMPLEMENTAR");
-        break;
-      case 7:
-        printf("DEBUG - POR IMPLEMENTAR");
-        break;
-      default:
-        printf("Error valor no valido.");
-      }
+  do {
+    printf("\n Operaciones disponibles:");
+    printf("\n -  1: ingresar pendiente (m).");
+    printf("\n -  2: ingresar ordenada (b).");
+    printf("\n -  3: ingresar valor de x.");
+    printf("\n -  4: imprimir valores actuales.");
+    printf("\n -  5: aproximar recta con 20 valores de x.");
+    printf("\n -  6: Exportar resultados a txt.");
+    printf("\n -  7: limpiar historial de resultados.");
+    printf("\n -  0: Salir.");
+    printf("\nIngrese una opcion:");
+
+    scanf("%d", &act);  // <-- corregido
+    getchar(); // Deja el buffer listo para la sig operacion.
+
+    switch (act) {
+    case 0:
+      break;
+    case 1:
+      m = leerNumeros();
+      printf("Resultado decimal: %c%d.%d", m.valores.signo ? '-' : '+', m.valores.entera, m.valores.fraccion);
+      break;
+    case 2:
+      b = leerNumeros();
+      printf("Resultado decimal: %c%d.%d", b.valores.signo ? '-' : '+', b.valores.entera, b.valores.fraccion);
+      break;
+    case 3:
+      x = leerNumeros();
+      printf("Resultado decimal: %c%d.%d", x.valores.signo ? '-' : '+', x.valores.entera, x.valores.fraccion);
+      break;
+    case 4:
+      printf("DEBUG - POR IMPLEMENTAR");
+      break;
+    case 5:
+      printf("DEBUG - POR IMPLEMENTAR");
+      break;
+    case 6:
+      printf("DEBUG - POR IMPLEMENTAR");
+      break;
+    case 7:
+      printf("DEBUG - POR IMPLEMENTAR");
+      break;
+    default:
+      printf("Error valor no valido.");
     }
-}
-return 0;
-}
 
-NumerosQ calcularY(NumerosQ m, NumerosQ b, , NumerosQ x){
-    
+  } while (act != 0);
+
+  return 0;  // <-- agregado
 }
 
-void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x) {}
+struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x){
+  struct NumerosQ res;
 
-struct NumerosQ
-leerNumeros() { // Lee un numero en punto fijo desde terminal y lo devuelve en
-                // una estructura, en caso de error el signo resultante es ERROR
+  return res;
+}
+
+void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x) {
+
+}
+
+struct Datos leerNumeros() {
+  struct Datos res;
   struct NumerosQ num;
   char input[50];
+
+  res.valores.signo = 1;
+  res.valores.entera = 0;
+  res.valores.fraccion = 0;
+  res.valores.divisor = 1;
+  res.input[0] = 1;
 
   num.signo = 1;
   num.entera = 0;
   num.fraccion = 0;
   num.divisor = 1;
 
-  printf("Ingrese un numero (+/-eee.ffff): ");
+  printf("\nIngrese un numero (+/-eee.ffff): ");
 
-  /* lee de la entrada estandar stdin (el teclado), lee como máximo 49
-   * caracteres y guarda en input, lo dejo en vez del scanf porque es más facil
-   * validar el tamaño y además evita crasheos*/
   if (!fgets(input, sizeof(input), stdin)) {
     printf("Error de entrada\n");
     num.signo = ERROR;
-    return num;
+    return res;
   }
 
   int i = 0;
 
-  /* valida el primer caracter como signo, si es negativo cambia la variable
-   * signo, si es positivo sigue de largo en el array */
   if (input[i] == '-') {
     num.signo = -1;
     i++;
@@ -126,28 +149,23 @@ leerNumeros() { // Lee un numero en punto fijo desde terminal y lo devuelve en
     i++;
   }
 
-  /* si lee algo que no es un digito, corta */
   if (!isdigit(input[i])) {
     printf("Formato invalido\n");
     num.signo = ERROR;
-    return num;
+    return res;
   }
 
-  /* a medida que lee digitos, los va metiendo en la parte entera (añade digito
-   * a digito multiplicando por 10) (resta el '0' porque son caracteres) */
   while (isdigit(input[i]) && i < sizeof(input)) {
     num.entera = num.entera * 10 + (input[i] - '0');
     i++;
   }
 
-  /* cuando lee el punto, empieza a completar la parte fraccionaria con el mismo
-   * proceso de arriba */
   if (input[i] == '.') {
     i++;
     if (!isdigit(input[i])) {
       printf("Formato invalido\n");
       num.signo = ERROR;
-      return num;
+      return res;
     }
 
     while (isdigit(input[i]) && i < sizeof(input)) {
@@ -157,5 +175,11 @@ leerNumeros() { // Lee un numero en punto fijo desde terminal y lo devuelve en
     }
   }
 
-  return num;
+  
+  res.valores = num;
+  for (int i=0; i<50; i++){
+    res.input[i] = input[i];
+  }
+
+  return res;
 }
