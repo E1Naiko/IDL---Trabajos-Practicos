@@ -13,19 +13,23 @@ En este caso queremos explorar la precisión y rango de valores que pueden obten
 
 #### a. ¿cuál es el rango de representación de valores de m ?
 
-La representación de $m$ es $Q(0,15)$. Siendo $a = 0$ y $b = 15$:
+La representación de $m$ es $Q(0,15)$. Siendo $a = 0$ y $b = 15$, su rango es:
 
-$$2^a-2^{-b}=2^0-2^{-15}=1-2^{-15}$$
+$$-2^a ≤ x ≤ +2^a-2^{-b}$$
+$$-2^0 ≤ x ≤ +2^0-2^{-15}$$
+$$-1 ≤ x ≤ +1-2^{-15}$$
 
-$m$ tiene un rango de representación que va de $-(1-2^{-15})$ a $+(1-2^{-15})$ ≈ ±0.999969482421875
+$m$ tiene un rango de representación que va de $-1$ a $+(1-2^{-15}) ≈ +0.999969482421875$
 
 #### b. ¿cuál es el rango de representaciones de valores de b?
 
-La representación de $b$ es $Q(7,8)$. Siendo $a = 7$ y $b = 8$:
+La representación de $b$ es $Q(7,8)$. Siendo $a = 7$ y $b = 8$, su rango es:
 
-$$2^a-2^{-b}=2^7-2^{-8}=128-0,00390625=127,99609375$$
+$$-2^a ≤ x ≤ +2^a-2^{-b}$$
+$$-2^7 ≤ x ≤ +2^7-2^{-8}$$
+$$-128 ≤ x ≤ +128-0,00390625$$
 
-$b$ tiene un rango de representación que va de $-127,99609375$ a $+127,99609375$.
+$b$ tiene un rango de representación que va de $-128$ a $+127,99609375$.
   
 #### c. Elija una representación Q ( c, d ) para x y para y tal que tanto m como b puedan representarse usando la misma representación sin pérdida de cifras significativas. Indique cuáles serían los desplazamientos y/o máscaras que debe utilizar para ubicar las variables.
 
