@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 // IMPORTANTE
 // - HAY QUE USAR Q(16,15) YA QUE ES LO QUE ELIGIO EL YUYO EN EL INCISO C. (ya
 // lo deje en el programa pero por las dudas aclaro
@@ -12,6 +11,8 @@
 #define RANGO_ENTERO 65535
 #define RANGO_DECIMAL 99996948242
 #define DEFINICION 000030517578125
+#define RANGO_INF -32768
+#define RANGO_SUP 32767
 #define ERROR 999
 
 struct NumerosQ {
