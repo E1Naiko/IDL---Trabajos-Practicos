@@ -7,8 +7,8 @@
 #define A 16
 #define B 15
 
-#define ESCALA     (1 << 15)
-#define RESOLUCION (1.0 / ESCALA)
+#define ESCALA16     (1 << 15)
+#define RESOLUCION (1.0 / ESCALA16)
 #define ERROR      999
 
 struct NumerosQ {
@@ -76,52 +76,58 @@ int IncisoH() {
     switch (act) {
     case 0:
       break;
-    case 1:
+  case 1:
       m = leerNumeros();
       printf("\nResultado decimal: %c%d.%d", m.valores.signo ? '-' : '+', m.valores.entera, m.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)m.valores.repreQ);
       break;
-    case 2:
+  case 2:
       b = leerNumeros();
       printf("\nResultado decimal: %c%d.%d", b.valores.signo ? '-' : '+', b.valores.entera, b.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)b.valores.repreQ);
       break;
-    case 3:
+  case 3:
       x = leerNumeros();
       printf("\nResultado decimal: %c%d.%d", x.valores.signo ? '-' : '+', x.valores.entera, x.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)x.valores.repreQ);
       break;
-    case 4:
+  case 4:
       y.valores = calcularY(m.valores, b.valores, x.valores);
       imprimirValores(m.valores, b.valores, x.valores, y.valores);
       break;
-    case 5:
+  case 5:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-    case 6:
+  case 6:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-    case 7:
+  case 7:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-    default:
+  default:
       printf("\nError valor no valido.");
-    }
+  }
 
-  } while (act != 0);
+  printf("\n\n-----------------");
+} while (act != 0);
 
-  return 0;
+return 0;
 }
 
 struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x){
-  struct NumerosQ res;
+  struct NumerosQ y;
 
-  return res;
+  y.repreQ = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
+  printf("\nDEBUG - Y = %d",y.repreQ);
+  printf("\nResultado Q(16,15): 0x%08X", (uint32_t)y.repreQ);
+
+  return y;
 }
 
 void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x, struct NumerosQ y) {
-  /* imprime el resultado (se debe usar unsigned int ya que si no se pisan los signos - y el número se imprime incorrectamente) */
-  //printf("Resultado Q(16,15): 0x%08X\n",(uint32_t) resultado);
+    printf("\n - Y = m * x + b:");
+    printf("\n --- Decimal: %c%d.%d = %c%d.%d * %c%d.%d + %c%d.%d",y.signo ? '-' : '+', y.entera, y.fraccion, m.signo ? '-' : '+', m.entera, m.fraccion, x.signo ? '-' : '+', x.entera, x.fraccion, b.signo ? '-' : '+', b.entera, b.fraccion);
+    printf("\n --- Resultado Q(16,15): 0x%08X = 0x%08X * 0x%08X + 0x%08X", (uint32_t)y.repreQ, (uint32_t)m.repreQ, (uint32_t)x.repreQ, (uint32_t)b.repreQ);
 }
 
 struct Datos leerNumeros() {
@@ -130,103 +136,105 @@ struct Datos leerNumeros() {
   char input[50];
   int continuar;
 
-  res.valores.signo = 1;
-  res.valores.entera = 0;
-  res.valores.fraccion = 0;
-  res.valores.divisor = 1;
-  res.input[0] = 1;
-
-  num.signo = 1;
-  num.entera = 0;
-  num.fraccion = 0;
-  num.divisor = 1;
-
   do {
     continuar = 1;
+
+    res.valores.signo = 1;
+    res.valores.entera = 0;
+    res.valores.fraccion = 0;
+    res.valores.divisor = 1;
+    res.input[0] = 1;
+
+    num.signo = 1;
+    num.entera = 0;
+    num.fraccion = 0;
+    num.divisor = 1;
+
+
     printf("\nIngrese un numero (+/-eee.ffff): ");
 
     if (!fgets(input, sizeof(input), stdin)) {
       printf("\nError de entrada");
       num.signo = ERROR;
       continuar = 0;
-    }
+  }
 
-    int i = 0;
+  int i = 0;
 
-    if (input[i] == '-') {
+  if (input[i] == '-') {
       num.signo = -1;
       i++;
-    } else if (input[i] == '+') {
+  } else if (input[i] == '+') {
       i++;
-    }
+  }
 
-    if (!isdigit(input[i])) {
+  if (!isdigit(input[i])) {
       printf("\nFormato invalido");
       num.signo = ERROR;
       continuar = 0;
-    }
+  }
 
-    while (isdigit(input[i]) && i < sizeof(input)) {
+  while (isdigit(input[i]) && i < sizeof(input)) {
       num.entera = num.entera * 10 + (input[i] - '0');
       i++;
-    }
+  }
 
-    if (input[i] == '.') {
+  if (input[i] == '.') {
       i++;
       if (!isdigit(input[i])) {
         printf("\nFormato invalido");
         num.signo = ERROR;
         continuar = 0;
-      }
+    }
 
-      while (isdigit(input[i]) && i < sizeof(input)) {
+    while (isdigit(input[i]) && i < sizeof(input)) {
         num.fraccion = num.fraccion * 10 + (input[i] - '0');
         num.divisor *= 10;
         i++;
-      }
+    }
 
-      num.repreQ = convertidorQ(num);
-      
+    num.repreQ = convertidorQ(num);
+
       /* valida el rango*/
       //if (num.repreQ < RANGO_INF || num.repreQ > RANGO_SUP) {
       //  printf("\nError: fuera de rango");
       //  continuar = 0;
       //}
-    }
-  } while (!continuar);
+}
+} while (!continuar);
 
-  
-  res.valores = num;
-  for (int i=0; i<50; i++){
+
+res.valores = num;
+for (int i=0; i<50; i++){
     res.input[i] = input[i];
-  }
+}
 
-  return res;
+return res;
 }
 
 // Q(16,15)
 int convertidorQ(struct NumerosQ n){ 
   // Extraido y modificado del IncisoF
-  /* convierte la parte entera a punto fijo multiplicando por la escala (2^16) */
-  
-  int resultado = n.entera * RANGO_ENTERO;
+  /* convierte la parte entera a punto fijo multiplicando por la escala16 (2^16) */
+
+  int resultado = n.entera * ESCALA16;
 
   /* realiza el mismo proceso con la parte fraccionaria (para mejorar precisión realiza un redondeo sumando el divisor/2 al numero antes de hacer la división, ya que si lo haces directo algunos números no se representan bien) */
   if (n.divisor > 1) {
 
-    int num = n.fraccion * RANGO_ENTERO;
+    int num = n.fraccion * ESCALA16;
 
     if (n.signo > 0)
       num += n.divisor / 2;
-    else
+  else
       num -= n.divisor / 2;
 
     /* se suma la parte fraccionaria al resultado (para convertirla de entero a decimales se divide por el divisor) */
-    resultado += num / n.divisor;
-  }
+  resultado += num / n.divisor;
+}
 
   /* multiplica por +-1 para darle signo al numero */
-  resultado *= n.signo;
+resultado *= n.signo;
 
-  return resultado;
+return resultado;
 }
