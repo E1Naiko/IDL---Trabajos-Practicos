@@ -18,8 +18,8 @@ int IncisoG(){
 
     /* Leer directamente hexadecimal */
     if (scanf("%4hx", &valor) != 1) {
+        fflush(stdin); /* Limpiar el buffer de entrada en caso de error */
         printf("\nFormato invalido");
-        getchar(); /* Limpiar el buffer de entrada */
         return 1;
     }
 
