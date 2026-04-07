@@ -3,8 +3,6 @@
 #include <ctype.h>
 
 #define ESCALA 256
-#define MAX_INT 127
-#define MIN_INT -128
 #define RANGO_INF -32768
 #define RANGO_SUP 32767
 
@@ -64,11 +62,13 @@ int IncisoF() {
         }
     }
 
-    /* convierte la parte entera a punto flotante multiplicando por la escala (2^8) */
+    /* convierte la parte entera a punto fijo multiplicando por la escala (2^8) */
     int resultado = entera * ESCALA;
 
     /* realiza el mismo proceso con la parte fraccionaria (para mejorar precisión realiza un redondeo sumando el divisor/2 al numero antes de hacer la división, ya que si lo haces directo algunos números no se representan bien) */
     if (divisor > 1) {
+
+        // num: 32*256/100
         int num = fraccion * ESCALA;
 
         if (signo > 0)
