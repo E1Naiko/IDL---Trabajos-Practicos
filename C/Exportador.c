@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-
-int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int dataYi[], int dataYd[], int size)
+int exportador(int mi, int md, int bi, int bd,
+               int dataXi[], int dataXd[],
+               int dataYi[], int dataYd[],
+               int size)
 {
     FILE *datasheet;
     char nombre[50];
@@ -10,10 +12,9 @@ int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int d
     printf("\nExportar datos a .txt\n");
     printf("\nIngrese un nombre para el archivo:\n");
 
-    scanf("%49s", nombre);  // evita overflow
+    scanf("%49s", nombre);
 
-    // Agregar extensión .csv
-    sprintf(nombreCompleto, "%s.csv", nombre);
+    sprintf(nombreCompleto, "%s.txt", nombre);
 
     datasheet = fopen(nombreCompleto, "w");
 
@@ -22,11 +23,14 @@ int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int d
         return 0;
     }
 
-    // Escribir datos
-    fprintf(datasheet, "%i.%i;%i.%i;", mi, md, bi, bd);
+    // m y b
+    fprintf(datasheet, "%i.%i;%i.%i\n", mi, md, bi, bd);
 
+    // datos
     for (int i = 0; i < size; i++) {
-        fprintf(datasheet, "%i.%i;%i.i", dataXi[i], dataXd[i], dataYi[i], dataXd[i]);
+        fprintf(datasheet, "%i.%i;%i.%i\n",
+                dataXi[i], dataXd[i],
+                dataYi[i], dataYd[i]);
     }
 
     fclose(datasheet);

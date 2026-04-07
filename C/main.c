@@ -1,7 +1,7 @@
 #include <stdio.h>      // <-- Te falta esta línea para el printf
-#include "IncisoF.h"
-#include "IncisoG.h"
-#include "IncisoH.h"
+#include "IncisoF.c"
+#include "IncisoG.c"
+#include "IncisoH.c"
 
 int main() {
 

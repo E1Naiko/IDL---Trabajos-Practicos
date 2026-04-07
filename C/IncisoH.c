@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "Exportador.h"
+#include "Exportador.c"
 
 // IMPORTANTE
 #define A 16
@@ -29,14 +29,12 @@ struct Datos leerNumeros();
 struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x);
 void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x, struct NumerosQ y);
 int convertidorQ(struct NumerosQ n);
+int aproximarLinea(struct NumerosQ m, struct NumerosQ b);
 
-/* 
-
-    h. Escriba un programa que permita el ingreso de los valores de m, b y x en forma decimal y muestre su representaciónen
+/*  h. Escriba un programa que permita el ingreso de los valores de m, b y x en forma decimal y muestre su representaciónen
   punto fijo en formato hexadecimal validando la entrada como en los puntos anteriores. Luego realizando todas las operacioes
   en punto fijo con las representaciones adoptadas calcule el valor de la ordenada y y lo muestre en punto fjo
   en forma hexadecimal y en decimal.
-
 */
 
 int IncisoH() {
@@ -65,7 +63,7 @@ int IncisoH() {
     printf("\n -  2: ingresar ordenada (b).");
     printf("\n -  3: ingresar valor de x.");
     printf("\n -  4: imprimir valores actuales.");
-    printf("\n -  5: aproximar recta con N valores de x y exportarlos a txt.");
+    printf("\n -  5: aproximar recta con N valores de x y exportarlos a txt (reutiliza m y b).");
     printf("\n -  0: Salir.");
     printf("\nIngrese una opcion:");
 
@@ -95,13 +93,8 @@ int IncisoH() {
       imprimirValores(m.valores, b.valores, x.valores, y.valores);
       break;
     case 5:
-      printf("\nDEBUG - POR IMPLEMENTAR");
-      break;
-    case 6:
-      printf("\nDEBUG - POR IMPLEMENTAR");
-      break;
-    case 7:
-      printf("\nDEBUG - POR IMPLEMENTAR");
+      if (aproximarLinea(m.valores,b.valores))
+        printf("\nERROR APROXIMACION");
       break;
     default:
       printf("\nError valor no valido.");
@@ -114,43 +107,43 @@ int IncisoH() {
 }
 
 struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x){
-    struct NumerosQ y;
+  struct NumerosQ y;
 
     // Calcular en 64 bits para evitar overflow intermedio
-    int64_t temp = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
+  int64_t temp = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
 
     // Chequeo de overflow antes de usar el valor
-    if (temp > INT32_MAX || temp < INT32_MIN) {
-        printf("Overflow en calculo de y\n");
+  if (temp > INT32_MAX || temp < INT32_MIN) {
+    printf("Overflow en calculo de y\n");
 
-        y.repreQ = 0;
-        y.signo = 1;
-        y.entera = 0;
-        y.fraccion = 0;
-        y.divisor = 1 << B;
-
-        return y;
-    }
-
-    // Ahora sí es seguro usarlo
-    y.repreQ = (int)temp;
-
-    // Determinar signo
-    y.signo = (y.repreQ < 0) ? -1 : 1;
-
-    // Valor absoluto
-    int valor = (y.repreQ < 0) ? -y.repreQ : y.repreQ;
-
-    // Parte entera
-    y.entera = valor >> B;
-
-    // Parte fraccionaria
-    y.fraccion = valor & ((1 << B) - 1);
-
-    // Divisor (escala)
+    y.repreQ = 0;
+    y.signo = 1;
+    y.entera = 0;
+    y.fraccion = 0;
     y.divisor = 1 << B;
 
     return y;
+  }
+
+    // Ahora sí es seguro usarlo
+  y.repreQ = (int)temp;
+
+    // Determinar signo
+  y.signo = (y.repreQ < 0) ? -1 : 1;
+
+    // Valor absoluto
+  int valor = (y.repreQ < 0) ? -y.repreQ : y.repreQ;
+
+    // Parte entera
+  y.entera = valor >> B;
+
+    // Parte fraccionaria
+  y.fraccion = valor & ((1 << B) - 1);
+
+    // Divisor (escala)
+  y.divisor = 1 << B;
+
+  return y;
 }
 
 void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x, struct NumerosQ y) {
@@ -272,4 +265,40 @@ int convertidorQ(struct NumerosQ n){
   resultado *= n.signo;
 
   return resultado;
+}
+
+int aproximarLinea(struct NumerosQ m, struct NumerosQ b){
+  int cant = 0;
+  printf("\n Ingrese el valor de N: ");
+  scanf("%d", &cant);
+  getchar();
+  struct Datos aux;
+  struct NumerosQ xAct, yAct;
+
+  int mB, mD,
+  bB, bD,
+  xB[cant], xD[cant],
+  yB[cant], yD[cant];
+
+  mB = (m.signo < 0 ? -1 : 1) * m.entera;
+  mD = m.fraccion;
+  bB = (b.signo < 0 ? -1 : 1) * b.entera;
+  bD = b.fraccion;
+
+
+  for (int i=0; i<cant; i++){
+    aux = leerNumeros();
+    
+    xAct = aux.valores;
+    yAct = calcularY(m, b, xAct);;
+    
+    xB[i] = (xAct.signo < 0 ? -1 : 1) * xAct.entera;
+    xD[i] = xAct.fraccion;
+    yB[i] = (yAct.signo < 0 ? -1 : 1) * yAct.entera;
+    yD[i] = yAct.fraccion;
+  }
+
+  // int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int dataYi[], int dataYd[], int size)
+  exportador(mB, mD, bB, bD, xB, xD, yB, yD, cant);
+  return 0;
 }
