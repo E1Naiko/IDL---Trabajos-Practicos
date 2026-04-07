@@ -9,8 +9,10 @@
 #define B 15
 
 #define ESCALA16     (1 << B)
-#define RESOLUCION (1.0 / ESCALA16)
+#define RESOLUCION_NUM 1
+#define RESOLUCION_DEN ESCALA16
 #define ERROR      999
+#define DECIMALES 100000
 
 struct NumerosQ {
   int signo;
@@ -105,14 +107,18 @@ int IncisoH() {
 
   return 0;
 }
+#define DECIMALES 100000  // 5 decimales
+
+int qFracToDecimal(int fracQ) {
+  return (fracQ * DECIMALES) >> B;
+}
 
 struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x){
   struct NumerosQ y;
 
-    // Calcular en 64 bits para evitar overflow intermedio
+  // cálculo en Q (64 bits para evitar overflow intermedio)
   int64_t temp = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
 
-    // Chequeo de overflow antes de usar el valor
   if (temp > INT32_MAX || temp < INT32_MIN) {
     printf("Overflow en calculo de y\n");
 
@@ -120,28 +126,27 @@ struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ 
     y.signo = 1;
     y.entera = 0;
     y.fraccion = 0;
-    y.divisor = 1 << B;
+    y.divisor = DECIMALES;
 
     return y;
   }
 
-    // Ahora sí es seguro usarlo
   y.repreQ = (int)temp;
 
-    // Determinar signo
+  // signo
   y.signo = (y.repreQ < 0) ? -1 : 1;
 
-    // Valor absoluto
-  int valor = (y.repreQ < 0) ? -y.repreQ : y.repreQ;
+  // valor absoluto en 64 bits (IMPORTANTE)
+  int64_t valor = (y.repreQ < 0) ? -(int64_t)y.repreQ : y.repreQ;
 
-    // Parte entera
-  y.entera = valor >> B;
+  // parte entera
+  y.entera = (int)(valor >> B);
 
-    // Parte fraccionaria
-  y.fraccion = valor & ((1 << B) - 1);
+  // fracción Q → decimal
+  int fracQ = (int)(valor & ((1 << B) - 1));
+  y.fraccion = qFracToDecimal(fracQ);
 
-    // Divisor (escala)
-  y.divisor = 1 << B;
+  y.divisor = DECIMALES;
 
   return y;
 }
@@ -241,30 +246,22 @@ struct Datos leerNumeros() {
 // Q(16,15)
 int convertidorQ(struct NumerosQ n){ 
 
-  printf("\nDEBUG:");
+  printf("\nDEBUG: convertidorQ()");
   printf("\nentera = %d", n.entera);
   printf("\nfraccion = %d", n.fraccion);
   printf("\ndivisor = %d", n.divisor);
   printf("\nescala = %d", ESCALA16);
 
+  // juntar entero + fracción en una sola escala
+  int64_t valorEscalado = (int64_t)n.entera * n.divisor + n.fraccion;
 
-  int resultado = n.entera * ESCALA16;
+  // convertir TODO junto a Q
+  int64_t resultado = (valorEscalado * ESCALA16) / n.divisor;
 
-  if (n.divisor > 1) {
-    int num = n.fraccion * ESCALA16;
-
-    if (n.signo >= 0)
-      num += n.divisor / 2;
-    else
-      num -= n.divisor / 2;
-
-    resultado += num / n.divisor;
-  }
-
-    // aplicar signo al final
+  // aplicar signo al final
   resultado *= n.signo;
 
-  return resultado;
+  return (int)resultado;
 }
 
 int aproximarLinea(struct NumerosQ m, struct NumerosQ b){
@@ -272,6 +269,7 @@ int aproximarLinea(struct NumerosQ m, struct NumerosQ b){
   printf("\n Ingrese el valor de N: ");
   scanf("%d", &cant);
   getchar();
+
   struct Datos aux;
   struct NumerosQ xAct, yAct;
 
@@ -280,25 +278,32 @@ int aproximarLinea(struct NumerosQ m, struct NumerosQ b){
   xB[cant], xD[cant],
   yB[cant], yD[cant];
 
-  mB = (m.signo < 0 ? -1 : 1) * m.entera;
-  mD = m.fraccion;
-  bB = (b.signo < 0 ? -1 : 1) * b.entera;
-  bD = b.fraccion;
+  int64_t valM = (m.repreQ < 0) ? -(int64_t)m.repreQ : m.repreQ;
+  mB = (m.repreQ < 0 ? -1 : 1) * (valM >> B);
+  mD = qFracToDecimal(valM & ((1 << B) - 1));
 
-
-  for (int i=0; i<cant; i++){
+  for (int i = 0; i < cant; i++){
     aux = leerNumeros();
-    
+
     xAct = aux.valores;
-    yAct = calcularY(m, b, xAct);;
-    
-    xB[i] = (xAct.signo < 0 ? -1 : 1) * xAct.entera;
-    xD[i] = xAct.fraccion;
-    yB[i] = (yAct.signo < 0 ? -1 : 1) * yAct.entera;
-    yD[i] = yAct.fraccion;
+    yAct = calcularY(m, b, xAct);
+
+    int64_t valor = (xAct.repreQ < 0) ? -(int64_t)xAct.repreQ : xAct.repreQ;
+
+    xB[i] = (xAct.repreQ < 0 ? -1 : 1) * (valor >> B);
+
+    int fracQ = valor & ((1 << B) - 1);
+    xD[i] = qFracToDecimal(fracQ);
+
+    int64_t valorY = (yAct.repreQ < 0) ? -(int64_t)yAct.repreQ : yAct.repreQ;
+
+    yB[i] = (yAct.repreQ < 0 ? -1 : 1) * (valorY >> B);
+
+    int fracQy = valorY & ((1 << B) - 1);
+    yD[i] = qFracToDecimal(fracQy);
   }
 
-  // int exportador(int mi, int md, int bi, int bd, int dataXi[], int dataXd[], int dataYi[], int dataYd[], int size)
   exportador(mB, mD, bB, bD, xB, xD, yB, yD, cant);
+
   return 0;
 }

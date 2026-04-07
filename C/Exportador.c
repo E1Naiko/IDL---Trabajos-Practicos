@@ -28,9 +28,9 @@ int exportador(int mi, int md, int bi, int bd,
 
     // datos
     for (int i = 0; i < size; i++) {
-        fprintf(datasheet, "%i.%i;%i.%i\n",
-                dataXi[i], dataXd[i],
-                dataYi[i], dataYd[i]);
+        fprintf(datasheet, "%d.%05d;%d.%05d\n",
+        dataXi[i], dataXd[i],
+        dataYi[i], dataYd[i]);
     }
 
     fclose(datasheet);
