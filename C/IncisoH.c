@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include "Exportador.h"
 
 // IMPORTANTE
 #define A 16
 #define B 15
 
-#define ESCALA16     (1 << 15)
+#define ESCALA16     (1 << B)
 #define RESOLUCION (1.0 / ESCALA16)
 #define ERROR      999
 
@@ -64,9 +65,7 @@ int IncisoH() {
     printf("\n -  2: ingresar ordenada (b).");
     printf("\n -  3: ingresar valor de x.");
     printf("\n -  4: imprimir valores actuales.");
-    printf("\n -  5: aproximar recta con 20 valores de x.");
-    printf("\n -  6: Exportar resultados a txt.");
-    printf("\n -  7: limpiar historial de resultados.");
+    printf("\n -  5: aproximar recta con N valores de x y exportarlos a txt.");
     printf("\n -  0: Salir.");
     printf("\nIngrese una opcion:");
 
@@ -76,58 +75,92 @@ int IncisoH() {
     switch (act) {
     case 0:
       break;
-  case 1:
+    case 1:
       m = leerNumeros();
-      printf("\nResultado decimal: %c%d.%d", m.valores.signo ? '-' : '+', m.valores.entera, m.valores.fraccion);
+      printf("\nResultado decimal: %c%d.%d", m.valores.signo<0 ? '-' : '+', m.valores.entera, m.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)m.valores.repreQ);
       break;
-  case 2:
+    case 2:
       b = leerNumeros();
-      printf("\nResultado decimal: %c%d.%d", b.valores.signo ? '-' : '+', b.valores.entera, b.valores.fraccion);
+      printf("\nResultado decimal: %c%d.%d", b.valores.signo<0 ? '-' : '+', b.valores.entera, b.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)b.valores.repreQ);
       break;
-  case 3:
+    case 3:
       x = leerNumeros();
-      printf("\nResultado decimal: %c%d.%d", x.valores.signo ? '-' : '+', x.valores.entera, x.valores.fraccion);
+      printf("\nResultado decimal: %c%d.%d", x.valores.signo<0 ? '-' : '+', x.valores.entera, x.valores.fraccion);
       printf("\nResultado Q(16,15): 0x%08X", (uint32_t)x.valores.repreQ);
       break;
-  case 4:
+    case 4:
       y.valores = calcularY(m.valores, b.valores, x.valores);
       imprimirValores(m.valores, b.valores, x.valores, y.valores);
       break;
-  case 5:
+    case 5:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-  case 6:
+    case 6:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-  case 7:
+    case 7:
       printf("\nDEBUG - POR IMPLEMENTAR");
       break;
-  default:
+    default:
       printf("\nError valor no valido.");
-  }
+    }
 
-  printf("\n\n-----------------");
-} while (act != 0);
+    printf("\n\n-----------------");
+  } while (act != 0);
 
-return 0;
+  return 0;
 }
 
 struct NumerosQ calcularY(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x){
-  struct NumerosQ y;
+    struct NumerosQ y;
 
-  y.repreQ = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
-  printf("\nDEBUG - Y = %d",y.repreQ);
-  printf("\nResultado Q(16,15): 0x%08X", (uint32_t)y.repreQ);
+    // Calcular en 64 bits para evitar overflow intermedio
+    int64_t temp = ((int64_t)m.repreQ * x.repreQ >> B) + b.repreQ;
 
-  return y;
+    // Chequeo de overflow antes de usar el valor
+    if (temp > INT32_MAX || temp < INT32_MIN) {
+        printf("Overflow en calculo de y\n");
+
+        y.repreQ = 0;
+        y.signo = 1;
+        y.entera = 0;
+        y.fraccion = 0;
+        y.divisor = 1 << B;
+
+        return y;
+    }
+
+    // Ahora sí es seguro usarlo
+    y.repreQ = (int)temp;
+
+    // Determinar signo
+    y.signo = (y.repreQ < 0) ? -1 : 1;
+
+    // Valor absoluto
+    int valor = (y.repreQ < 0) ? -y.repreQ : y.repreQ;
+
+    // Parte entera
+    y.entera = valor >> B;
+
+    // Parte fraccionaria
+    y.fraccion = valor & ((1 << B) - 1);
+
+    // Divisor (escala)
+    y.divisor = 1 << B;
+
+    return y;
 }
 
 void imprimirValores(struct NumerosQ m, struct NumerosQ b, struct NumerosQ x, struct NumerosQ y) {
-    printf("\n - Y = m * x + b:");
-    printf("\n --- Decimal: %c%d.%d = %c%d.%d * %c%d.%d + %c%d.%d",y.signo ? '-' : '+', y.entera, y.fraccion, m.signo ? '-' : '+', m.entera, m.fraccion, x.signo ? '-' : '+', x.entera, x.fraccion, b.signo ? '-' : '+', b.entera, b.fraccion);
-    printf("\n --- Resultado Q(16,15): 0x%08X = 0x%08X * 0x%08X + 0x%08X", (uint32_t)y.repreQ, (uint32_t)m.repreQ, (uint32_t)x.repreQ, (uint32_t)b.repreQ);
+  printf("\n - Y = m * x + b:");
+  printf("\n --- Decimal: %c%d.%d = %c%d.%d * %c%d.%d + %c%d.%d",
+   y.signo < 0 ? '-' : '+', y.entera, y.fraccion,
+   m.signo < 0 ? '-' : '+', m.entera, m.fraccion,
+   x.signo < 0 ? '-' : '+', x.entera, x.fraccion,
+   b.signo < 0 ? '-' : '+', b.entera, b.fraccion);
+  printf("\n --- Resultado Q(16,15): 0x%08X = 0x%08X * 0x%08X + 0x%08X", (uint32_t)y.repreQ, (uint32_t)m.repreQ, (uint32_t)x.repreQ, (uint32_t)b.repreQ);
 }
 
 struct Datos leerNumeros() {
@@ -143,7 +176,6 @@ struct Datos leerNumeros() {
     res.valores.entera = 0;
     res.valores.fraccion = 0;
     res.valores.divisor = 1;
-    res.input[0] = 1;
 
     num.signo = 1;
     num.entera = 0;
@@ -157,84 +189,87 @@ struct Datos leerNumeros() {
       printf("\nError de entrada");
       num.signo = ERROR;
       continuar = 0;
-  }
+    }
 
-  int i = 0;
+    int i = 0;
 
-  if (input[i] == '-') {
+    if (input[i] == '-') {
       num.signo = -1;
       i++;
-  } else if (input[i] == '+') {
+    } else if (input[i] == '+') {
       i++;
-  }
+    }
 
-  if (!isdigit(input[i])) {
+    if (!isdigit(input[i])) {
       printf("\nFormato invalido");
       num.signo = ERROR;
       continuar = 0;
-  }
+    }
 
-  while (isdigit(input[i]) && i < sizeof(input)) {
+    while (isdigit(input[i]) && i < sizeof(input)) {
       num.entera = num.entera * 10 + (input[i] - '0');
       i++;
-  }
+    }
 
-  if (input[i] == '.') {
+    if (input[i] == '.') {
       i++;
       if (!isdigit(input[i])) {
         printf("\nFormato invalido");
         num.signo = ERROR;
         continuar = 0;
-    }
+      }
 
-    while (isdigit(input[i]) && i < sizeof(input)) {
+      while (isdigit(input[i]) && i < sizeof(input)) {
         num.fraccion = num.fraccion * 10 + (input[i] - '0');
         num.divisor *= 10;
         i++;
+      }
     }
 
-    num.repreQ = convertidorQ(num);
-
-      /* valida el rango*/
-      //if (num.repreQ < RANGO_INF || num.repreQ > RANGO_SUP) {
-      //  printf("\nError: fuera de rango");
-      //  continuar = 0;
-      //}
-}
-} while (!continuar);
+    /* valida el rango*/
+    if (num.entera > 65535) {
+      printf("\nError: fuera de rango");
+      continuar = 0;
+    }
+  } while (!continuar);
 
 
-res.valores = num;
-for (int i=0; i<50; i++){
+  num.repreQ = convertidorQ(num);
+  res.valores = num;
+
+  for (int i=0; i<50; i++){
     res.input[i] = input[i];
-}
+  }
 
-return res;
+
+  return res;
 }
 
 // Q(16,15)
 int convertidorQ(struct NumerosQ n){ 
-  // Extraido y modificado del IncisoF
-  /* convierte la parte entera a punto fijo multiplicando por la escala16 (2^16) */
+
+  printf("\nDEBUG:");
+  printf("\nentera = %d", n.entera);
+  printf("\nfraccion = %d", n.fraccion);
+  printf("\ndivisor = %d", n.divisor);
+  printf("\nescala = %d", ESCALA16);
+
 
   int resultado = n.entera * ESCALA16;
 
-  /* realiza el mismo proceso con la parte fraccionaria (para mejorar precisión realiza un redondeo sumando el divisor/2 al numero antes de hacer la división, ya que si lo haces directo algunos números no se representan bien) */
   if (n.divisor > 1) {
-
     int num = n.fraccion * ESCALA16;
 
-    if (n.signo > 0)
+    if (n.signo >= 0)
       num += n.divisor / 2;
-  else
+    else
       num -= n.divisor / 2;
 
-    /* se suma la parte fraccionaria al resultado (para convertirla de entero a decimales se divide por el divisor) */
-  resultado += num / n.divisor;
-}
+    resultado += num / n.divisor;
+  }
 
-  /* multiplica por +-1 para darle signo al numero */
-resultado *= n.signo;
+    // aplicar signo al final
+  resultado *= n.signo;
 
-return resultado;
+  return resultado;
 }

@@ -14,22 +14,22 @@ int hexToInt(char c);/*No se usa en esta implementacion*/
 
 int IncisoG(){
     uint16_t valor = 0;
-    printf("Ingrese un numero en formato 0xHHHH: "); 
+    printf("\nIngrese un numero en formato 0xHHHH: "); 
     
     /* Leer directamente hexadecimal */
     if (scanf("%hx", &valor) != 1) {
-        printf("Formato invalido\n");
+        printf("\nFormato invalido");
         return 1;
     }
     
     /*Mostrar el valor entero sin signo para verificar la conversión*/
-    printf("Valor entero sin signo: %u\n", valor); 
+    printf("\nValor entero sin signo: %u", valor); 
     
     /* Interpretar como int16_t (complemento a 2)*/
     int16_t valor16 = (int16_t)valor; 
     
     /*Mostrar el valor entero con signo para verificar la interpretación*/
-    printf("Valor entero con signo: %d\n", valor16); 
+    printf("\nValor entero con signo: %d", valor16); 
     
     /* Separar partes
 
@@ -68,7 +68,7 @@ int IncisoG(){
         entero = -entero; /*Si el número es negativo, se muestra el signo y se convierte la parte entera a negativa para que se imprima correctamente*/
     }
 
-    printf("valor en formato Q(7,8): %d.%04d\n", entero, fraccion); /* Mostrar el valor en formato Q(7,8)*/
+    printf("\nvalor en formato Q(7,8): %d.%04d", entero, fraccion); /* Mostrar el valor en formato Q(7,8)*/
 
     return 0;
 }
