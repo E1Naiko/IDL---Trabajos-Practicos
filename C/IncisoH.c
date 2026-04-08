@@ -244,13 +244,8 @@ int convertidorQ(struct NumerosQ n){
   /*printf("\ndivisor = %d", n.divisor);*/
   /*printf("\nescala = %d", ESCALA16);*/
 
-  // juntar entero + fracción en una sola escala
   int64_t valorEscalado = (int64_t)n.entera * n.divisor + n.fraccion;
-
-  // convertir TODO junto a Q
   int64_t resultado = (valorEscalado * ESCALA16) / n.divisor;
-
-  // aplicar signo al final
   resultado *= n.signo;
 
   return (int)resultado;
