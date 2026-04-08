@@ -1,4 +1,4 @@
-#include <stdio.h>      // <-- Te falta esta línea para el printf
+#include <stdio.h>
 #include "IncisoF.c"
 #include "IncisoG.c"
 #include "IncisoH.c"

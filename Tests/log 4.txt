@@ -1,0 +1,162 @@
+Programa iniciado correctamente.
+
+ Operaciones disponibles:
+ -  1: IncisoF.          
+ -  2: IncisoG.          
+ -  3: IncisoH.          
+ -  0: Salir.            
+Ingrese una opcion:3     
+
+ Operaciones disponibles:                                                       
+ -  1: ingresar pendiente (m).                                                  
+ -  2: ingresar ordenada (b).                                                   
+ -  3: ingresar valor de x.                                                     
+ -  4: imprimir valores actuales.                                               
+ -  5: aproximar recta con N valores de x y exportarlos a txt (reutiliza m y b).
+ -  0: Salir.                                                                   
+Ingrese una opcion:1                                                            
+
+Ingrese un numero (+/-eee.ffff): +1.75
+
+DEBUG: convertidorQ()
+entera = 1           
+fraccion = 75        
+divisor = 100        
+escala = 32768
+Resultado decimal: +1.75
+Resultado Q(16,15): 0x0000E000
+
+-----------------
+ Operaciones disponibles:
+ -  1: ingresar pendiente (m).
+ -  2: ingresar ordenada (b).
+ -  3: ingresar valor de x.
+ -  4: imprimir valores actuales.
+ -  5: aproximar recta con N valores de x y exportarlos a txt (reutiliza m y b).
+ -  0: Salir.
+Ingrese una opcion:2
+
+Ingrese un numero (+/-eee.ffff): -0.3125
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 3125
+divisor = 10000
+escala = 32768
+Resultado decimal: -0.3125
+Resultado Q(16,15): 0xFFFFD800
+
+-----------------
+ Operaciones disponibles:
+ -  1: ingresar pendiente (m).
+ -  2: ingresar ordenada (b).
+ -  3: ingresar valor de x.
+ -  4: imprimir valores actuales.
+ -  5: aproximar recta con N valores de x y exportarlos a txt (reutiliza m y b).
+ -  0: Salir.
+Ingrese una opcion:5
+
+ Ingrese el valor de N: 10
+
+Ingrese un numero (+/-eee.ffff): +0.0
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 0
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +0.1
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 1
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +0.25
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 25
+divisor = 100
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +0.5
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 5
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +0.75
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 75
+divisor = 100
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +1.0
+
+DEBUG: convertidorQ()
+entera = 1
+fraccion = 0
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): -0.1
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 1
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): -0.5
+
+DEBUG: convertidorQ()
+entera = 0
+fraccion = 5
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): -1.0
+
+DEBUG: convertidorQ()
+entera = 1
+fraccion = 0
+divisor = 10
+escala = 32768
+Ingrese un numero (+/-eee.ffff): +1.33333
+
+DEBUG: convertidorQ()
+entera = 1
+fraccion = 33333
+divisor = 100000
+escala = 32768
+Exportar datos a .txt
+
+Ingrese un nombre para el archivo:
+datos
+
+Archivo exportado correctamente
+
+
+-----------------
+ Operaciones disponibles:
+ -  1: ingresar pendiente (m).
+ -  2: ingresar ordenada (b).
+ -  3: ingresar valor de x.
+ -  4: imprimir valores actuales.
+ -  5: aproximar recta con N valores de x y exportarlos a txt (reutiliza m y b).
+ -  0: Salir.
+Ingrese una opcion:0
+
+
+-----------------
+
+-----------------
+ Operaciones disponibles:
+ -  1: IncisoF.
+ -  2: IncisoG.
+ -  3: IncisoH.
+ -  0: Salir.
+Ingrese una opcion:0
+
+
+-----------------
+[Finished in 72.67s]

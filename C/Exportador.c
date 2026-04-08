@@ -1,8 +1,32 @@
 #include <stdio.h>
-#include <string.h>
-int exportador(int mi, int md, int bi, int bd,
-               int dataXi[], int dataXd[],
-               int dataYi[], int dataYd[],
+#include <stdint.h>
+
+#define B 15
+#define DECIMALES 100000
+
+// convierte fracción Q a decimal (5 decimales)
+int qFracToDecimal(int fracQ) {
+    return (fracQ * DECIMALES) >> B;
+}
+
+// imprime un número en formato decimal desde Q
+void printQ(FILE *f, int32_t valorQ) {
+    int signo = (valorQ < 0) ? -1 : 1;
+
+    int64_t absVal = (valorQ < 0) ? -(int64_t)valorQ : valorQ;
+
+    int ent = (int)(absVal >> B);
+    int fracQ = (int)(absVal & ((1 << B) - 1));
+    int frac = qFracToDecimal(fracQ);
+
+    if (signo < 0)
+        fprintf(f, "-%d.%05d", ent, frac);
+    else
+        fprintf(f, "%d.%05d", ent, frac);
+}
+
+int exportador(int mQ, int bQ,
+               int dataXQ[], int dataYQ[],
                int size)
 {
     FILE *datasheet;
@@ -23,14 +47,22 @@ int exportador(int mi, int md, int bi, int bd,
         return 0;
     }
 
+    // =========================
     // m y b
-    fprintf(datasheet, "%i.%i;%i.%i\n", mi, md, bi, bd);
+    // =========================
+    printQ(datasheet, mQ);
+    fprintf(datasheet, ";");
+    printQ(datasheet, bQ);
+    fprintf(datasheet, "\n");
 
+    // =========================
     // datos
+    // =========================
     for (int i = 0; i < size; i++) {
-        fprintf(datasheet, "%d.%05d;%d.%05d\n",
-        dataXi[i], dataXd[i],
-        dataYi[i], dataYd[i]);
+        printQ(datasheet, dataXQ[i]);
+        fprintf(datasheet, ";");
+        printQ(datasheet, dataYQ[i]);
+        fprintf(datasheet, "\n");
     }
 
     fclose(datasheet);
