@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "Grupo03f.h"
-#include "Grupo03g.h"
-#include "Grupo03h.h"
+#include "Grupo03f.c"
+#include "Grupo03g.c"
+#include "Grupo03h.c"
 
 /* ATENCION PARA USAR ESTE MAIN HAY QUE RENOMBRAR EL ARCHIVO A main.c, LE CAMBIAMOS EL NOMBRE PARA RESPETAR LOS TERMINOS DE ENTREGA */
 int main() {
@@ -23,15 +23,15 @@ int main() {
         case 0:
           break;
         case 1:
-          if (IncisoF())
+          if (Grupo03f())
             printf("\nERROR INCISO F");
         break;
         case 2:
-            if (IncisoG())
+            if (Grupo03g())
                 printf("\nERROR INCISO G");
             break;
         case 3:
-            if (IncisoH())
+            if (Grupo03h())
                 printf("\nERROR INCISO H");
             break;
         default:
