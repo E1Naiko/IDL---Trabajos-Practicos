@@ -14,7 +14,7 @@ int hexToInt(char c);/*No se usa en esta implementacion*/
 
 int Grupo03g(){
     uint16_t valor = 0;
-    printf("\nIngrese un numero en formato 0xHHHH: ");
+    printf("\nIngrese un numero en formato 0xHHHH:0x ");
 
     /* Leer directamente hexadecimal */
     if (scanf("%4hx", &valor) != 1) {
