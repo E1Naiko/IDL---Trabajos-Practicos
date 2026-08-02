@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone IV GX"
 set_global_assignment -name DEVICE auto
-set_global_assignment -name TOP_LEVEL_ENTITY Decodificador
+set_global_assignment -name TOP_LEVEL_ENTITY MultiOperador
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:53:39  JULY 16, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION 13.1
@@ -48,28 +48,40 @@ set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda
 set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR "C:/Users/Ag230/Downloads/IDLTrabajosPracticos-main/TPIntegrador/simulation/qsim/" -section_id eda_simulation
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST ON -section_id eda_simulation
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name SOURCE_FILE altfp_compare0.cmp
+set_global_assignment -name QIP_FILE altfp_compare0.qip
+set_global_assignment -name BDF_FILE OutputEnable.bdf
+set_global_assignment -name BDF_FILE Negador.bdf
+set_global_assignment -name BDF_FILE Load.bdf
+set_global_assignment -name BDF_FILE BloqueOR.bdf
+set_global_assignment -name BDF_FILE BloqueAND.bdf
+set_global_assignment -name BDF_FILE ASR.bdf
+set_global_assignment -name VHDL_FILE altfp_compare0.vhd
+set_global_assignment -name BDF_FILE DecoSUMA.bdf
+set_global_assignment -name BDF_FILE DecoRESTA.bdf
+set_global_assignment -name BDF_FILE DecoOR.bdf
+set_global_assignment -name BDF_FILE DecoNOT.bdf
 set_global_assignment -name BDF_FILE DecoNOP.bdf
+set_global_assignment -name BDF_FILE Decodificador.bdf
+set_global_assignment -name BDF_FILE DecoCOMP.bdf
+set_global_assignment -name BDF_FILE DecoASR.bdf
+set_global_assignment -name BDF_FILE DecoAND.bdf
+set_global_assignment -name BDF_FILE Comp.bdf
 set_global_assignment -name BDF_FILE LookAheadCarryFullAdder.bdf
 set_global_assignment -name BDF_FILE AsumB.bdf
 set_global_assignment -name VECTOR_WAVEFORM_FILE AsumBWaveform1.vwf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoNOP.vwf
-set_global_assignment -name BDF_FILE DecoSUMA.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoSUMA.vwf
-set_global_assignment -name BDF_FILE DecoRESTA.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoRESTA.vwf
-set_global_assignment -name BDF_FILE DecoCOMP.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoCOMP.vwf
-set_global_assignment -name BDF_FILE DecoNOT.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoNOT.vwf
-set_global_assignment -name BDF_FILE DecoAND.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoAND.vwf
-set_global_assignment -name BDF_FILE DecoOR.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoOR.vwf
-set_global_assignment -name BDF_FILE DecoASR.bdf
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecoASR.vwf
-set_global_assignment -name BDF_FILE Decodificador.bdf
+set_global_assignment -name BDF_FILE TPIntegrador.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE LookAheadCarryFullAdderWaveform.vwf
+set_global_assignment -name BDF_FILE AsubB.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE AsubBWaveform.vwf
+set_global_assignment -name BDF_FILE AcompB.bdf
+set_global_assignment -name BDF_FILE notA.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE notAWaveform.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE OE.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE TPIntegrador.vwf
+set_global_assignment -name BDF_FILE MultiOperador.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformMultiOp.vwf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VECTOR_WAVEFORM_FILE WaveformDecodificador.vwf
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

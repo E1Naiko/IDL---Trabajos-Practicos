@@ -21,9 +21,9 @@ applicable agreement for further details.
 (header "graphic" (version "1.4"))
 (pin
 	(input)
-	(rect 56 288 224 304)
+	(rect 0 288 168 304)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "A" (rect 5 0 14 12)(font "Arial" ))
+	(text "A" (rect 5 0 13 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -37,9 +37,9 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 56 312 224 328)
+	(rect 0 312 168 328)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "B" (rect 5 0 13 12)(font "Arial" ))
+	(text "B" (rect 5 0 12 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -53,20 +53,20 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 360 -160 376 8)
-	(text "INPUT" (rect 0 125 10 153)(font "Arial" (font_size 6))(vertical))
-	(text "C_In" (rect 0 5 12 29)(font "Arial" )(vertical))
-	(pt 8 168)
+	(rect 200 232 368 248)
+	(text "INPUT" (rect 125 6 153 16)(font "Arial" (font_size 6)))
+	(text "C_In" (rect 5 4 28 16)(font "Arial" ))
+	(pt 168 8)
 	(drawing
-		(line (pt 12 84)(pt 12 109))
-		(line (pt 4 84)(pt 4 109))
-		(line (pt 8 113)(pt 8 168))
-		(line (pt 12 84)(pt 4 84))
-		(line (pt 4 109)(pt 8 113))
-		(line (pt 12 109)(pt 8 113))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 4)(pt 84 12))
+		(line (pt 109 12)(pt 113 8))
+		(line (pt 109 4)(pt 113 8))
 	)
-	(flipy_rotate90)
-	(text "VCC" (rect 7 128 17 148)(font "Arial" (font_size 6))(vertical))
+	(flipx)
+	(text "VCC" (rect 128 -1 148 9)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -170,7 +170,7 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 408 136 472 184)
+	(rect 408 152 472 200)
 	(text "AND2" (rect 1 0 25 10)(font "Arial" (font_size 6)))
 	(text "inst2" (rect 3 37 26 49)(font "Arial" ))
 	(port
@@ -334,14 +334,6 @@ applicable agreement for further details.
 	(pt 496 104)
 )
 (connector
-	(pt 496 120)
-	(pt 496 160)
-)
-(connector
-	(pt 472 160)
-	(pt 496 160)
-)
-(connector
 	(pt 472 112)
 	(pt 496 112)
 )
@@ -350,80 +342,84 @@ applicable agreement for further details.
 	(pt 368 240)
 )
 (connector
-	(pt 408 168)
-	(pt 368 168)
-)
-(connector
-	(pt 368 240)
-	(pt 368 168)
-)
-(connector
 	(pt 408 120)
 	(pt 368 120)
-)
-(connector
-	(pt 368 168)
-	(pt 368 120)
-)
-(connector
-	(pt 368 120)
-	(pt 368 8)
-)
-(connector
-	(pt 408 56)
-	(pt 232 56)
-)
-(connector
-	(pt 336 296)
-	(pt 232 296)
-)
-(connector
-	(pt 232 296)
-	(pt 224 296)
-)
-(connector
-	(pt 408 72)
-	(pt 248 72)
-)
-(connector
-	(pt 224 320)
-	(pt 248 320)
-)
-(connector
-	(pt 248 320)
-	(pt 288 320)
-)
-(connector
-	(pt 408 104)
-	(pt 232 104)
-)
-(connector
-	(pt 232 56)
-	(pt 232 104)
-)
-(connector
-	(pt 232 104)
-	(pt 232 296)
-)
-(connector
-	(pt 408 152)
-	(pt 248 152)
-)
-(connector
-	(pt 248 72)
-	(pt 248 152)
-)
-(connector
-	(pt 248 152)
-	(pt 248 320)
 )
 (connector
 	(pt 560 112)
 	(pt 592 112)
 )
-(junction (pt 368 168))
-(junction (pt 368 120))
-(junction (pt 232 296))
-(junction (pt 248 320))
-(junction (pt 232 104))
-(junction (pt 248 152))
+(connector
+	(pt 168 296)
+	(pt 176 296)
+)
+(connector
+	(pt 176 296)
+	(pt 336 296)
+)
+(connector
+	(pt 168 320)
+	(pt 192 320)
+)
+(connector
+	(pt 192 320)
+	(pt 288 320)
+)
+(connector
+	(pt 408 56)
+	(pt 176 56)
+)
+(connector
+	(pt 176 104)
+	(pt 408 104)
+)
+(connector
+	(pt 176 56)
+	(pt 176 104)
+)
+(connector
+	(pt 176 104)
+	(pt 176 296)
+)
+(connector
+	(pt 408 72)
+	(pt 192 72)
+)
+(connector
+	(pt 496 120)
+	(pt 496 176)
+)
+(connector
+	(pt 496 176)
+	(pt 472 176)
+)
+(connector
+	(pt 192 168)
+	(pt 408 168)
+)
+(connector
+	(pt 368 184)
+	(pt 408 184)
+)
+(connector
+	(pt 192 72)
+	(pt 192 168)
+)
+(connector
+	(pt 192 168)
+	(pt 192 320)
+)
+(connector
+	(pt 368 120)
+	(pt 368 184)
+)
+(connector
+	(pt 368 184)
+	(pt 368 240)
+)
+(junction (pt 176 296))
+(junction (pt 192 320))
+(junction (pt 176 104))
+(junction (pt 192 168))
+(junction (pt 368 240))
+(junction (pt 368 184))
