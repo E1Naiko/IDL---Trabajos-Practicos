@@ -269,7 +269,7 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1272 104 1400 200)
+	(rect 1280 104 1408 200)
 	(text "Load" (rect 5 0 33 14)(font "Arial" (font_size 8)))
 	(text "Estado" (rect 8 80 42 92)(font "Arial" ))
 	(port
@@ -1682,29 +1682,8 @@ applicable agreement for further details.
 	(pt 1256 -96)
 )
 (connector
-	(pt 1256 -96)
-	(pt 1256 152)
-)
-(connector
-	(pt 1240 -72)
-	(pt 1240 168)
-)
-(connector
 	(pt 568 104)
 	(pt 568 -96)
-)
-(connector
-	(pt 1400 136)
-	(pt 1456 136)
-	(bus)
-)
-(connector
-	(pt 1256 152)
-	(pt 1272 152)
-)
-(connector
-	(pt 1240 168)
-	(pt 1272 168)
 )
 (connector
 	(pt 1464 56)
@@ -1757,11 +1736,6 @@ applicable agreement for further details.
 	(text "N[3]" (rect 1468 192 1489 204)(font "Arial" ))
 	(pt 1488 208)
 	(pt 1456 208)
-)
-(connector
-	(pt 1272 136)
-	(pt 1224 136)
-	(bus)
 )
 (connector
 	(pt 1216 432)
@@ -1977,11 +1951,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1224 88)
-	(pt 1224 136)
-	(bus)
-)
-(connector
 	(pt 1136 416)
 	(pt 1152 416)
 	(bus)
@@ -1999,12 +1968,6 @@ applicable agreement for further details.
 (connector
 	(pt 1160 24)
 	(pt 1160 416)
-	(bus)
-)
-(connector
-	(text "Flags[3..0]" (rect 1208 213 1220 266)(font "Arial" )(vertical))
-	(pt 1224 136)
-	(pt 1224 432)
 	(bus)
 )
 (connector
@@ -2138,6 +2101,43 @@ applicable agreement for further details.
 (connector
 	(pt 288 120)
 	(pt 288 1120)
+)
+(connector
+	(pt 1256 -96)
+	(pt 1256 152)
+)
+(connector
+	(pt 1240 -72)
+	(pt 1240 168)
+)
+(connector
+	(pt 1456 136)
+	(pt 1408 136)
+	(bus)
+)
+(connector
+	(pt 1224 88)
+	(pt 1224 136)
+	(bus)
+)
+(connector
+	(text "Flags[3..0]" (rect 1208 213 1220 266)(font "Arial" )(vertical))
+	(pt 1224 136)
+	(pt 1224 432)
+	(bus)
+)
+(connector
+	(pt 1224 136)
+	(pt 1280 136)
+	(bus)
+)
+(connector
+	(pt 1256 152)
+	(pt 1280 152)
+)
+(connector
+	(pt 1240 168)
+	(pt 1280 168)
 )
 (junction (pt 616 216))
 (junction (pt 600 424))
