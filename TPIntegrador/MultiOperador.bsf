@@ -68,15 +68,15 @@ applicable agreement for further details.
 	(port
 		(pt 184 80)
 		(output)
-		(text "Z" (rect 0 0 8 14)(font "Arial" (font_size 8)))
-		(text "Z" (rect 155 75 163 89)(font "Arial" (font_size 8)))
+		(text "N" (rect 0 0 8 14)(font "Arial" (font_size 8)))
+		(text "N" (rect 155 75 163 89)(font "Arial" (font_size 8)))
 		(line (pt 184 80)(pt 168 80))
 	)
 	(port
 		(pt 184 96)
 		(output)
-		(text "N" (rect 0 0 8 14)(font "Arial" (font_size 8)))
-		(text "N" (rect 155 91 163 105)(font "Arial" (font_size 8)))
+		(text "Z" (rect 0 0 8 14)(font "Arial" (font_size 8)))
+		(text "Z" (rect 155 91 163 105)(font "Arial" (font_size 8)))
 		(line (pt 184 96)(pt 168 96))
 	)
 	(drawing
